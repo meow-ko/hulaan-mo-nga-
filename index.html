@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hulaan Mo Nga!!1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a3d2f 0%, #1a5c48 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            color: #fff;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .christmas-header {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .title {
+            font-size: 2.5rem;
+            color: #ffcc00;
+            text-shadow: 2px 2px 0 #d35400, 4px 4px 0 rgba(0, 0, 0, 0.2);
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #f8f8f8;
+            margin-bottom: 15px;
+        }
+        
+        .snowflakes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .snowflake {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        .game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .instruction {
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.4;
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 12px;
+            border-radius: 10px;
+            border-left: 4px solid #ffcc00;
+        }
+        
+        .game-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+        }
+        
+        .input-label {
+            font-size: 1.3rem;
+            color: #ffcc00;
+            font-weight: bold;
+        }
+        
+        .guess-input {
+            padding: 18px;
+            font-size: 2rem;
+            width: 180px;
+            text-align: center;
+            border-radius: 12px;
+            border: 4px solid #ffcc00;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #0a3d2f;
+            font-weight: bold;
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+        }
+        
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .btn {
+            padding: 18px;
+            font-size: 1.3rem;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-height: 60px;
+        }
+        
+        .btn-guess {
+            background: linear-gradient(145deg, #e74c3c, #c0392b);
+            color: white;
+            box-shadow: 0 5px 0 #922b21;
+        }
+        
+        .btn-reset {
+            background: linear-gradient(145deg, #3498db, #2980b9);
+            color: white;
+            box-shadow: 0 5px 0 #1c5d87;
+        }
+        
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+        }
+        
+        .game-info {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 12px;
+            border-radius: 10px;
+            margin-top: 5px;
+        }
+        
+        .info-box {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .result-area {
+            text-align: center;
+            min-height: 120px;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .message {
+            font-size: 1.5rem;
+            color: #ffcc00;
+            margin-bottom: 10px;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            line-height: 1.3;
+        }
+        
+        .hint {
+            font-size: 1.1rem;
+            color: #a3e4d7;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        .attempts-display {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .attempt {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .attempt.used {
+            background-color: #e74c3c;
+        }
+        
+        .attempt.current {
+            background-color: #ffcc00;
+            color: #0a3d2f;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px #ffcc00;
+        }
+        
+        .decorations {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .decoration {
+            font-size: 2.5rem;
+            color: #ffcc00;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #a3e4d7;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 15px;
+            line-height: 1.4;
+        }
+        
+        .sound-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 10;
+        }
+        
+        .sound-btn {
+            background-color: rgba(255, 255, 255, 0.25);
+            border: none;
+            color: white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            transition: all 0.3s;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+        }
+        
+        .sound-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .sound-btn.active {
+            background-color: rgba(255, 204, 0, 0.8);
+            color: #ffcc00;
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.7);
+        }
+        
+        .sound-btn.boost {
+            background-color: #ff3333;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 51, 51, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 51, 51, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 51, 51, 0); }
+        }
+        
+        .sound-label {
+            font-size: 0.7rem;
+            text-align: center;
+            color: #ffcc00;
+            margin-top: 2px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 400px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .instruction {
+                font-size: 1rem;
+            }
+            
+            .guess-input {
+                width: 150px;
+                font-size: 1.8rem;
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 16px;
+                font-size: 1.2rem;
+            }
+            
+            .info-value {
+                font-size: 1.5rem;
+            }
+            
+            .message {
+                font-size: 1.3rem;
+            }
+            
+            .decoration {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: 500px;
+            }
+            
+            .buttons {
+                flex-direction: row;
+                max-width: 100%;
+            }
+            
+            .btn {
+                flex: 1;
+            }
+        }
+        
+        /* Landscape mode */
+        @media (max-height: 600px) and (orientation: landscape) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                max-width: 90%;
+                padding: 15px;
+            }
+            
+            .game-area {
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .instruction {
+                padding: 8px;
+                font-size: 0.9rem;
+            }
+            
+            .guess-input {
+                padding: 10px;
+                font-size: 1.5rem;
+                width: 120px;
+            }
+            
+            .btn {
+                padding: 12px;
+                font-size: 1rem;
+                min-height: 50px;
+            }
+            
+            .result-area {
+                min-height: 80px;
+                padding: 10px;
+            }
+            
+            .message {
+                font-size: 1.2rem;
+                min-height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="snowflakes" id="snowflakes"></div>
+        
+        <div class="sound-controls">
+            <div>
+                <button id="musicToggle" class="sound-btn active">
+                    <i class="fas fa-music"></i>
+                </button>
+                <div class="sound-label">MUSIC</div>
+            </div>
+            <div>
+                <button id="soundToggle" class="sound-btn active">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <div class="sound-label">SOUND</div>
+            </div>
+            <div>
+                <button id="volumeBoost" class="sound-btn boost">
+                    <i class="fas fa-bullhorn"></i>
+                </button>
+                <div class="sound-label">LOUD!</div>
+            </div>
+        </div>
+        
+        <div class="christmas-header">
+            <h1 class="title">HULAAN MO NGA!</h1>
+            <p class="subtitle">May Regalo Kapag Tama Ka!</p>
+        </div>
+        
+        <div class="game-area">
+            <div class="instruction">
+                <p>Hulaan ang numero mula 1 hanggang 100!<br>
+                May 5 chance lamang. Kapag naubos mo ang 5 chance talo ka atlalabas ang tamang sagot!</p>
+            </div>
+            
+            <div class="game-controls">
+                <div class="input-group">
+                    <div class="input-label">Ilagay ang iyong hula:</div>
+                    <input type="number" id="guessInput" class="guess-input" min="1" max="100" placeholder="1-100" inputmode="numeric">
+                </div>
+                
+                <div class="buttons">
+                    <button id="guessBtn" class="btn btn-guess">
+                        <i class="fas fa-gift"></i> Hulaan mo teh!!
+                    </button>
+                    <button id="resetBtn" class="btn btn-reset">
+                        <i class="fas fa-redo"></i> Ulitin mo aba!!
+                    </button>
+                </div>
+            </div>
+            
+            <div class="game-info">
+                <div class="info-box">
+                    <div class="info-label">Buhay moto</div>
+                    <div class="info-value" id="attemptsCount">0/5</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Last Number</div>
+                    <div class="info-value" id="lastGuess">-</div>
+                </div>
+                <div class="info-box">
+                    <div class="info-label">Ayusin mo ang buhay mo!</div>
+                    <div class="info-value" id="remainingAttempts">5</div>
+                </div>
+            </div>
+            
+            <div class="attempts-display" id="attemptsDisplay">
+                <!-- Attempt circles will be generated here -->
+            </div>
+        </div>
+        
+        <div class="result-area">
+            <div class="message" id="message">Maghula ng numero mula 1 hanggang 100!</div>
+            <div class="hint" id="hint"></div>
+        </div>
+        
+        <div class="decorations">
+            <div class="decoration">🎄</div>
+            <div class="decoration">🎁</div>
+            <div class="decoration">⭐</div>
+            <div class="decoration">🦌</div>
+            <div class="decoration">🎅</div>
+        </div>
+        
+        <div class="footer">
+            <p>🎄 Christmas Party Game 🎄<br>
+            Para sa taong mukhang pera!</p>
+        </div>
+    </div>
+
+    <script>
+        // Game variables
+        let secretNumber;
+        let attempts;
+        let maxAttempts = 5;
+        let gameOver;
+        let musicEnabled = true;
+        let soundEnabled = true;
+        let volumeBoosted = true; // Default to LOUD mode
+        let audioContext;
+        let musicInterval;
+        
+        // DOM elements
+        const guessInput = document.getElementById('guessInput');
+        const guessBtn = document.getElementById('guessBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const message = document.getElementById('message');
+        const hint = document.getElementById('hint');
+        const attemptsCount = document.getElementById('attemptsCount');
+        const lastGuess = document.getElementById('lastGuess');
+        const remainingAttempts = document.getElementById('remainingAttempts');
+        const attemptsDisplay = document.getElementById('attemptsDisplay');
+        const musicToggle = document.getElementById('musicToggle');
+        const soundToggle = document.getElementById('soundToggle');
+        const volumeBoost = document.getElementById('volumeBoost');
+        
+        // Initialize the game
+        function initGame() {
+            // Generate random number between 1 and 100
+            secretNumber = Math.floor(Math.random() * 100) + 1;
+            attempts = 0;
+            gameOver = false;
+            
+            // Reset UI
+            message.textContent = "Maghula ng numero mula 1 hanggang 100!";
+            hint.textContent = "";
+            guessInput.value = "";
+            lastGuess.textContent = "-";
+            attemptsCount.textContent = "0/5";
+            remainingAttempts.textContent = "5";
+            
+            // Clear and create attempt circles
+            attemptsDisplay.innerHTML = "";
+            for (let i = 0; i < maxAttempts; i++) {
+                const attemptCircle = document.createElement('div');
+                attemptCircle.classList.add('attempt');
+                attemptCircle.textContent = i + 1;
+                attemptsDisplay.appendChild(attemptCircle);
+            }
+            
+            // Update attempt circles
+            updateAttemptCircles();
+            
+            // Start background music if enabled
+            if (musicEnabled) {
+                setTimeout(() => {
+                    startBackgroundMusic();
+                }, 500);
+            }
+            
+            // Focus on input for mobile
+            setTimeout(() => {
+                guessInput.focus();
+            }, 300);
+            
+            console.log("Secret number (for testing):", secretNumber);
+        }
+        
+        // Update attempt circles display
+        function updateAttemptCircles() {
+            const attemptCircles = document.querySelectorAll('.attempt');
+            attemptCircles.forEach((circle, index) => {
+                circle.classList.remove('used', 'current');
+                
+                if (index < attempts) {
+                    circle.classList.add('used');
+                } else if (index === attempts) {
+                    circle.classList.add('current');
+                }
+            });
+        }
+        
+        // Create Web Audio Context
+        function getAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            // Resume audio context if suspended (mobile browsers)
+            if (audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+            return audioContext;
+        }
+        
+        // Calculate volume based on boost setting
+        function getVolume(baseVolume) {
+            let volume = baseVolume;
+            if (volumeBoosted) {
+                volume *= 3; // 3x LOUDER!
+            }
+            return Math.min(volume, 1.0);
+        }
+        
+        // Play a LOUD beep sound (for wrong guesses - "ENG" sound)
+        function playWrongSound() {
+            if (!soundEnabled) return;
+            
+            const context = getAudioContext();
+            const oscillator = context.createOscillator();
+            const gainNode = context.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(context.destination);
+            
+            // "ENG" sound - LOUD and clear
+            oscillator.frequency.setValueAtTime(180, context.currentTime);
+            oscillator.type = 'sawtooth';
+            
+            // VERY LOUD
+            const volume = getVolume(0.7);
+            gainNode.gain.setValueAtTime(volume, context.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.8);
+            
+            oscillator.start(context.currentTime);
+            oscillator.stop(context.currentTime + 0.8);
+            
+            // Add vibration for mobile
+            if (navigator.vibrate) {
+                navigator.vibrate(200);
+            }
+        }
+        
+        // Play a LOUD success sound (for correct guesses - "TING TING TING")
+        function playCorrectSound() {
+            if (!soundEnabled) return;
+            
+            const context = getAudioContext();
+            
+            // Play three high-pitched "TING" sounds - VERY LOUD
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const oscillator = context.createOscillator();
+                    const gainNode = context.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(context.destination);
+                    
+                    oscillator.frequency.setValueAtTime(1200 + i * 200, context.currentTime);
+                    oscillator.type = 'sine';
+                    
+                    const volume = getVolume(0.6);
+                    gainNode.gain.setValueAtTime(volume, context.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.4);
+                    
+                    oscillator.start(context.currentTime);
+                    oscillator.stop(context.currentTime + 0.4);
+                    
+                }, i * 150);
+            }
+            
+            // Add a final victory chord - SUPER LOUD
+            setTimeout(() => {
+                const notes = [523.25, 659.25, 783.99]; // C, E, G chord
+                notes.forEach((freq, index) => {
+                    setTimeout(() => {
+                        const oscillator = context.createOscillator();
+                        const gainNode = context.createGain();
+                        
+                        oscillator.connect(gainNode);
+                        gainNode.connect(context.destination);
+                        
+                        oscillator.frequency.setValueAtTime(freq, context.currentTime);
+                        oscillator.type = 'sine';
+                        
+                        gainNode.gain.setValueAtTime(getVolume(0.5), context.currentTime);
+                        gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 1.0);
+                        
+                        oscillator.start(context.currentTime);
+                        oscillator.stop(context.currentTime + 1.0);
+                    }, index * 50);
+                });
+            }, 600);
+            
+            // Vibration for mobile
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100, 50, 200]);
+            }
+        }
+        
+        // Play LOUD game over sound
+        function playGameOverSound() {
+            if (!soundEnabled) return;
+            
+            const context = getAudioContext();
+            const oscillator = context.createOscillator();
+            const gainNode = context.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(context.destination);
+            
+            oscillator.frequency.setValueAtTime(400, context.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(100, context.currentTime + 2.0);
+            oscillator.type = 'sawtooth';
+            
+            const volume = getVolume(0.8);
+            gainNode.gain.setValueAtTime(volume, context.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 2.0);
+            
+            oscillator.start(context.currentTime);
+            oscillator.stop(context.currentTime + 2.0);
+            
+            // Vibration for mobile
+            if (navigator.vibrate) {
+                navigator.vibrate(500);
+            }
+        }
+        
+        // Create LOUD Jingle Bells background music
+        function startBackgroundMusic() {
+            if (!musicEnabled) return;
+            
+            // Clear any existing music
+            if (musicInterval) {
+                clearInterval(musicInterval);
+            }
+            
+            const context = getAudioContext();
+            let noteIndex = 0;
+            const tempo = 280;
+            
+            // Jingle Bells melody - LOUDER version
+            const melody = [
+                { freq: 659, duration: 0.5 },
+                { freq: 659, duration: 0.5 },
+                { freq: 659, duration: 1 },
+                { freq: 659, duration: 0.5 },
+                { freq: 659, duration: 0.5 },
+                { freq: 659, duration: 1 },
+                { freq: 659, duration: 0.5 },
+                { freq: 783, duration: 0.5 },
+                { freq: 523, duration: 0.5 },
+                { freq: 587, duration: 0.5 },
+                { freq: 659, duration: 2 },
+                { freq: 0, duration: 0.5 },
+                { freq: 698, duration: 0.5 },
+                { freq: 698, duration: 0.5 },
+                { freq: 698, duration: 0.5 },
+                { freq: 698, duration: 0.5 },
+                { freq: 698, duration: 0.5 },
+                { freq: 659, duration: 0.5 },
+                { freq: 659, duration: 0.5 },
+                { freq: 659, duration: 0.5 },
+                { freq: 659, duration: 0.5 },
+                { freq: 587, duration: 0.5 },
+                { freq: 587, duration: 0.5 },
+                { freq: 659, duration: 0.5 },
+                { freq: 587, duration: 1 },
+                { freq: 783, duration: 2 },
+            ];
+            
+            musicInterval = setInterval(() => {
+                if (!musicEnabled) {
+                    clearInterval(musicInterval);
+                    return;
+                }
+                
+                const note = melody[noteIndex % melody.length];
+                
+                if (note.freq > 0) {
+                    // Main note - LOUDER
+                    const oscillator = context.createOscillator();
+                    const gainNode = context.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(context.destination);
+                    
+                    oscillator.frequency.setValueAtTime(note.freq, context.currentTime);
+                    oscillator.type = 'triangle';
+                    
+                    const volume = getVolume(0.25); // LOUD background music
+                    gainNode.gain.setValueAtTime(volume, context.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.001, context.currentTime + note.duration * tempo / 500);
+                    
+                    oscillator.start(context.currentTime);
+                    oscillator.stop(context.currentTime + note.duration * tempo / 500);
+                    
+                    // Harmony - LOUDER
+                    const harmony = context.createOscillator();
+                    const harmonyGain = context.createGain();
+                    
+                    harmony.connect(harmonyGain);
+                    harmonyGain.connect(context.destination);
+                    
+                    harmony.frequency.setValueAtTime(note.freq * 1.5, context.currentTime);
+                    harmony.type = 'sine';
+                    
+                    harmonyGain.gain.setValueAtTime(getVolume(0.15), context.currentTime);
+                    harmonyGain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + note.duration * tempo / 600);
+                    
+                    harmony.start(context.currentTime);
+                    harmony.stop(context.currentTime + note.duration * tempo / 600);
+                    
+                    // Bass - LOUDER
+                    if (noteIndex % 4 === 0) {
+                        const bass = context.createOscillator();
+                        const bassGain = context.createGain();
+                        
+                        bass.connect(bassGain);
+                        bassGain.connect(context.destination);
+                        
+                        bass.frequency.setValueAtTime(note.freq / 2, context.currentTime);
+                        bass.type = 'sine';
+                        
+                        bassGain.gain.setValueAtTime(getVolume(0.2), context.currentTime);
+                        bassGain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + note.duration * tempo / 400);
+                        
+                        bass.start(context.currentTime);
+                        bass.stop(context.currentTime + note.duration * tempo / 400);
+                    }
+                }
+                
+                noteIndex++;
+            }, tempo);
+        }
+        
+        // Stop background music
+        function stopBackgroundMusic() {
+            if (musicInterval) {
+                clearInterval(musicInterval);
+                musicInterval = null;
+            }
+        }
+        
+        // Process the guess
+        function processGuess() {
+            if (gameOver) return;
+            
+            const userGuess = parseInt(guessInput.value);
+            
+            // Validate input
+            if (isNaN(userGuess) || userGuess < 1 || userGuess > 100) {
+                message.textContent = "Pakilagay ang tamang numero (1-100)!";
+                message.style.color = "#ff9999";
+                playWrongSound();
+                return;
+            }
+            
+            // Increment attempts
+            attempts++;
+            
+            // Update UI
+            attemptsCount.textContent = `${attempts}/${maxAttempts}`;
+            remainingAttempts.textContent = maxAttempts - attempts;
+            lastGuess.textContent = userGuess;
+            
+            // Update attempt circles
+            updateAttemptCircles();
+            
+            // Check if guess is correct
+            if (userGuess === secretNumber) {
+                gameOver = true;
+                message.innerHTML = `<span style="color:#ffcc00">🎉 WOW! TAMA ANG HULA MO! 🎉</span><br>Ang numero ay ${secretNumber}!`;
+                hint.textContent = "Panalo ka ng espesyal na regalo ngayong Pasko! 🎁";
+                message.style.color = "#ffcc00";
+                
+                playCorrectSound();
+                stopBackgroundMusic();
+                confettiEffect();
+                return;
+            }
+            
+            // Play wrong guess sound
+            playWrongSound();
+            
+            // Provide hint
+            if (userGuess < secretNumber) {
+                hint.textContent = "Mas mataas ang numero!";
+            } else {
+                hint.textContent = "Mas mababa ang numero!";
+            }
+            
+            // Check if attempts are exhausted
+            if (attempts >= maxAttempts) {
+                gameOver = true;
+                message.innerHTML = `<span style="color:#e74c3c">💀 Naubos na ang iyong mga pagtatangka!</span><br>Ang tamang numero ay ${secretNumber}.`;
+                hint.textContent = "Subukan muli sa susunod na round!";
+                message.style.color = "#e74c3c";
+                
+                playGameOverSound();
+                return;
+            }
+            
+            // Regular response
+            message.innerHTML = `Hula #${attempts}: <span style="color:#ffcc00">${userGuess}</span>`;
+            message.style.color = "#ffffff";
+            
+            // Clear input and focus
+            guessInput.value = "";
+            guessInput.focus();
+        }
+        
+        // Create snowflakes
+        function createSnowflakes() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            const snowflakeCount = 30;
+            
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.classList.add('snowflake');
+                
+                const size = Math.random() * 4 + 2;
+                snowflake.style.width = `${size}px`;
+                snowflake.style.height = `${size}px`;
+                snowflake.style.left = `${Math.random() * 100}%`;
+                
+                const duration = Math.random() * 10 + 5;
+                snowflake.style.animationDuration = `${duration}s`;
+                snowflake.style.animationDelay = `${Math.random() * 5}s`;
+                
+                snowflakesContainer.appendChild(snowflake);
+            }
+        }
+        
+        // Simple confetti effect
+        function confettiEffect() {
+            const confettiCount = 30;
+            const container = document.querySelector('.container');
+            
+            for (let i = 0; i < confettiCount; i++) {
+                const confetti = document.createElement('div');
+                confetti.innerHTML = ['🎉', '🎊', '⭐', '🎁', '🎄'][Math.floor(Math.random() * 5)];
+                confetti.style.position = 'absolute';
+                confetti.style.fontSize = `${Math.random() * 20 + 15}px`;
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.top = `-50px`;
+                confetti.style.opacity = '0.9';
+                confetti.style.zIndex = '9999';
+                confetti.style.animation = `fallConfetti ${Math.random() * 3 + 2}s linear forwards`;
+                
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes fallConfetti {
+                        0% { transform: translateY(0) rotate(0deg); }
+                        100% { transform: translateY(100vh) rotate(${Math.random() * 360}deg); }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                container.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 3000);
+            }
+        }
+        
+        // Toggle background music
+        function toggleMusic() {
+            musicEnabled = !musicEnabled;
+            
+            if (musicEnabled) {
+                musicToggle.classList.add('active');
+                musicToggle.innerHTML = '<i class="fas fa-music"></i>';
+                startBackgroundMusic();
+            } else {
+                musicToggle.classList.remove('active');
+                musicToggle.innerHTML = '<i class="fas fa-music-slash"></i>';
+                stopBackgroundMusic();
+            }
+        }
+        
+        // Toggle sound effects
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            
+            if (soundEnabled) {
+                soundToggle.classList.add('active');
+                soundToggle.innerHTML = '<i class="fas fa-volume-up"></i>';
+            } else {
+                soundToggle.classList.remove('active');
+                soundToggle.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            }
+        }
+        
+        // Toggle volume boost
+        function toggleVolumeBoost() {
+            volumeBoosted = !volumeBoosted;
+            
+            if (volumeBoosted) {
+                volumeBoost.classList.add('boost');
+                volumeBoost.innerHTML = '<i class="fas fa-bullhorn"></i>';
+                message.innerHTML = '🔊🔊 MALAKAS NA TUNOG! 🔊🔊';
+                setTimeout(() => {
+                    if (!gameOver) {
+                        message.textContent = "Maghula ng numero mula 1 hanggang 100!";
+                    }
+                }, 1500);
+            } else {
+                volumeBoost.classList.remove('boost');
+                volumeBoost.innerHTML = '<i class="fas fa-volume-off"></i>';
+            }
+        }
+        
+        // Initialize audio on first interaction
+        function initAudio() {
+            getAudioContext();
+            // Test sound
+            if (soundEnabled) {
+                const context = getAudioContext();
+                const oscillator = context.createOscillator();
+                const gainNode = context.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(context.destination);
+                
+                oscillator.frequency.setValueAtTime(800, context.currentTime);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.1, context.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, context.currentTime + 0.1);
+                
+                oscillator.start(context.currentTime);
+                oscillator.stop(context.currentTime + 0.1);
+            }
+        }
+        
+        // Event listeners for mobile
+        guessBtn.addEventListener('click', processGuess);
+        guessBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        });
+        
+        resetBtn.addEventListener('click', function() {
+            if (musicEnabled) {
+                startBackgroundMusic();
+            }
+            initGame();
+        });
+        resetBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        });
+        
+        guessInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                processGuess();
+            }
+        });
+        
+        // Virtual keyboard input handling for mobile
+        guessInput.addEventListener('input', function() {
+            if (this.value.length > 3) {
+                this.value = this.value.slice(0, 3);
+            }
+        });
+        
+        musicToggle.addEventListener('click', toggleMusic);
+        musicToggle.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            toggleMusic();
+        });
+        
+        soundToggle.addEventListener('click', toggleSound);
+        soundToggle.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            toggleSound();
+        });
+        
+        volumeBoost.addEventListener('click', toggleVolumeBoost);
+        volumeBoost.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            toggleVolumeBoost();
+        });
+        
+        // Initialize the game when page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            initGame();
+            createSnowflakes();
+            
+            // Initialize audio on first touch/click
+            document.addEventListener('click', function initAudioOnce() {
+                initAudio();
+                document.removeEventListener('click', initAudioOnce);
+            });
+            
+            // Mobile-specific: Initialize on touch
+            document.addEventListener('touchstart', function initAudioOnceTouch() {
+                initAudio();
+                document.removeEventListener('touchstart', initAudioOnceTouch);
+            });
+        });
+        
+        // Handle visibility change
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                stopBackgroundMusic();
+            } else if (musicEnabled) {
+                setTimeout(() => {
+                    startBackgroundMusic();
+                }, 500);
+            }
+        });
+        
+        // Prevent zoom on double-tap for mobile
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = Date.now();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    </script>
+</body>
+</html>
